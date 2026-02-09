@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Depoimentos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --black-1: #0a0a0a;
+            --black-2: #121212;
+            --black-3: #1a1a1a;
+            --gray-1: #2a2a2a;
+            --gray-2: #3a3a3a;
+            --gray-3: #5a5a5a;
+            --light: #f0f0f0;
+            --highlight: #4dabf7;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--black-1) 0%, #151525 50%, var(--black-1) 100%);
+            color: var(--light);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Hero - APENAS 1 TÍTULO */
+        .hero {
+            padding: 100px 0 80px;
+            text-align: center;
+        }
+        
+        .hero-title {
+            font-size: 3.8rem;
+            font-weight: 800;
+            color: var(--light);
+            line-height: 1.1;
+            letter-spacing: -1px;
+            background: linear-gradient(to right, #ffffff, #b0b0b0);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* Depoimentos Grid */
+        .depoimentos-section {
+            padding: 0 0 120px;
+        }
+        
+        .depoimentos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        
+        .depoimento-card {
+            background: linear-gradient(145deg, var(--black-2), var(--black-3));
+            border: 1px solid var(--gray-1);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            height: 220px;
+            position: relative;
+        }
+        
+        .depoimento-card:hover {
+            border-color: var(--gray-3);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .depoimento-img-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .depoimento-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.5s ease;
+        }
+        
+        .depoimento-card:hover .depoimento-img {
+            transform: scale(1.05);
+        }
+        
+        /* Texto que aparece - MENOR, UMA LINHA SÓ */
+        .depoimento-text {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 10, 0.9);
+            padding: 10px 15px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #f0f0f0;
+            text-align: center;
+            transform: translateY(100%);
+            transition: transform 0.25s ease;
+            z-index: 2;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-top: 1px solid var(--gray-1);
+        }
+        
+        .depoimento-card:hover .depoimento-text {
+            transform: translateY(0);
+        }
+        
+        /* Efeito overlay no hover */
+        .depoimento-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(77, 171, 247, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .depoimento-card:hover::after {
+            opacity: 0.5;
+        }
+        
+        /* CTA Instagram */
+        .instagram-cta {
+            text-align: center;
+            padding: 80px 0 100px;
+            position: relative;
+        }
+        
+        .instagram-cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--gray-3), transparent);
+        }
+        
+        .instagram-btn {
+            background: linear-gradient(135deg, var(--gray-2), var(--gray-3));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 18px 35px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .instagram-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4);
+            background: linear-gradient(135deg, var(--gray-3), var(--gray-2));
+        }
+        
+        .instagram-btn i {
+            font-size: 1.2rem;
+        }
+        
+        /* Responsividade */
+        @media (max-width: 992px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+            
+            .depoimentos-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero {
+                padding: 70px 0 50px;
+            }
+            
+            .hero-title {
+                font-size: 2.3rem;
+            }
+            
+            .depoimentos-grid {
+                grid-template-columns: 1fr;
+                max-width: 500px;
+            }
+            
+            .depoimento-card {
+                height: 200px;
+            }
+            
+            .instagram-btn {
+                padding: 16px 30px;
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .depoimento-card {
+                height: 180px;
+            }
+            
+            .depoimento-text {
+                padding: 8px 12px;
+                font-size: 0.9rem;
+                height: 35px;
+            }
+        }
+        
+        /* Animações */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.6s ease forwards;
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero - APENAS 1 TÍTULO -->
+    <section class="hero">
+        <div class="container">
+            <h1 class="hero-title">DEPOIMENTOS</h1>
+        </div>
+    </section>
+    
+    <!-- Seção de Depoimentos -->
+    <section class="depoimentos-section">
+        <div class="container">
+            <div class="depoimentos-grid" id="depoimentos-grid">
+                <!-- Depoimentos serão gerados por JavaScript -->
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA Instagram -->
+    <section class="instagram-cta">
+        <div class="container">
+            <a href="https://instagram.com/seu_usuario" target="_blank" class="instagram-btn">
+                <i class="fab fa-instagram"></i> QUERO UM SITE AGORA
+            </a>
+        </div>
+    </section>
+
+    <script>
+        // Dados dos depoimentos (substitua pelas suas imagens reais)
+        const depoimentos = [
+            { id: 1, nome: "LUANA", idade: 41, img: "imagem1.png" },
+            { id: 2, nome: "LUCAS", idade: 19, img: "imagem2.png" },
+            { id: 3, nome: "MANUELA", idade: 32, img: "imagem3.png" },
+            { id: 4, nome: "MARCOS", idade: 25, img: "imagem4.png" },
+            { id: 5, nome: "MÁRCIA", idade: 61, img: "imagem6.png" },
+            { id: 6, nome: "MATHEUS", idade: 42, img: "imagem6.png" },
+            { id: 7, nome: "JOÃO GUILHERME", idade: 30, img: "imagem8.png" },
+            { id: 8, nome: "LETÍCIA", idade: 22, img: "imagem7.png" },
+            { id: 9, nome: "YASMIN", idade: 55, img: "imagem9.png" },
+            { id: 10, nome: "SAMUEL", idade: 36, img: "imagem10.png" },
+            { id: 11, nome: "RAFAEL", idade: 33, img: "https://via.placeholder.com/600x400/2a2a2a/ffffff?text=Feedback+11" },
+            { id: 12, nome: "BEATRIZ", idade: 29, img: "https://via.placeholder.com/600x400/2a2a2a/ffffff?text=Feedback+12" },
+            { id: 13, nome: "GUSTAVO", idade: 37, img: "https://via.placeholder.com/600x400/2a2a2a/ffffff?text=Feedback+13" },
+            { id: 14, nome: "ISABELA", idade: 26, img: "https://via.placeholder.com/600x400/2a2a2a/ffffff?text=Feedback+14" },
+            { id: 15, nome: "FELIPE", idade: 31, img: "https://via.placeholder.com/600x400/2a2a2a/ffffff?text=Feedback+15" },
+            { id: 16, nome: "CAMILA", idade: 23, img: "https://via.placeholder.com/600x400/2a2a2a/ffffff?text=Feedback+16" },
+            { id: 17, nome: "RODRIGO", idade: 38, img: "https://via.placeholder.com/600x400/2a2a2a/ffffff?text=Feedback+17" },
+            { id: 18, nome: "LETÍCIA", idade: 21, img: "https://via.placeholder.com/600x400/2a2a2a/ffffff?text=Feedback+18" },
+            { id: 19, nome: "BRUNO", idade: 34, img: "https://via.placeholder.com/600x400/2a2a2a/ffffff?text=Feedback+19" },
+            { id: 20, nome: "CAROLINA", idade: 28, img: "https://via.placeholder.com/600x400/2a2a2a/ffffff?text=Feedback+20" }
+        ];
+
+        // Elementos DOM
+        const depoimentosGrid = document.getElementById('depoimentos-grid');
+
+        // Renderizar depoimentos
+        function renderDepoimentos() {
+            depoimentos.forEach((depoimento, index) => {
+                const card = document.createElement('div');
+                card.className = 'depoimento-card fade-in';
+                card.style.animationDelay = `${index * 0.05}s`;
+                card.style.opacity = '0';
+                
+                card.innerHTML = `
+                    <div class="depoimento-img-container">
+                        <img class="depoimento-img" src="${depoimento.img}" alt="Depoimento de ${depoimento.nome}" loading="lazy">
+                        <div class="depoimento-text">${depoimento.nome}, ${depoimento.idade} ANOS</div>
+                    </div>
+                `;
+                
+                depoimentosGrid.appendChild(card);
+                
+                // Animação de entrada
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                }, index * 50);
+            });
+        }
+
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', () => {
+            renderDepoimentos();
+        });
+    </script>
+</body>
+</html>
